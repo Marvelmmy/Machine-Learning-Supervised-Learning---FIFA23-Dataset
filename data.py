@@ -13,4 +13,18 @@ df.drop(columns=[df.drop(columns=['Name', 'Photo', 'Nationality',
                                   'Position','Joined',	'Loaned From',
                                   'Preferred Foot','Work Rate',	'Body Type',
                                   'Real Face','Best Overall Rating','Contract Valid Until' ], inplace=True)])
+#changing the datatypes from str to int 
+#value
+def value_to_float(value):
+    value = value.replace('€', '')
+    if 'M' in value:
+        return float(value.replace('M', '')) * 1000000
+    elif 'K' in value:
+        return float(value.replace('K', '')) * 1000
+    else:
+        try:
+            return float(value)
+        except:
+            return 0
+df['Value'] = df['Value'].apply(value_to_float)
 
