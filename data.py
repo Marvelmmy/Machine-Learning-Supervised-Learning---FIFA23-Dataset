@@ -27,4 +27,17 @@ def value_to_float(value):
         except:
             return 0
 df['Value'] = df['Value'].apply(value_to_float)
-
+#wage
+def wage_to_float(wage):
+  wage = wage.replace('€', '')
+  if 'K' in wage:
+    return float(wage.replace('K',''))*1000
+  else:
+    try:
+      return float(wage)
+    except:
+      return 0 
+df['Wage'] = df['Wage'].apply(wage_to_float)
+#height 
+df['height'] = df['height'].str.replace('cm','')
+df['height'] = df['height'].astype(float)
