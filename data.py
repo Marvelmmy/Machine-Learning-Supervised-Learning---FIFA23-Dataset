@@ -41,3 +41,23 @@ df['Wage'] = df['Wage'].apply(wage_to_float)
 #height 
 df['height'] = df['height'].str.replace('cm','')
 df['height'] = df['height'].astype(float)
+#weight
+df['weight'] = df['weight'].str.replace('kg', '')
+df['weight'] = df['weight'].astype(float)
+#release clause
+def release_clause_to_float(release_clause):
+    if pd.isnull(release_clause):
+        return 0
+    release_clause = release_clause.replace('€', '')
+    if 'M' in release_clause:
+        return float(release_clause.replace('M', '')) * 1000000
+    elif 'K' in release_clause:
+        return float(release_clause.replace('K', '')) * 1000
+    else:
+        try:
+            return float(release_clause)
+        except:
+            return 0
+df['Release Clause'] = df['Release Clause'].apply(release_clause_to_float)
+mean_kit = df['Kit Number'].mean()
+df['Kit Number'].fillna(mean_kit,inplace=True)
