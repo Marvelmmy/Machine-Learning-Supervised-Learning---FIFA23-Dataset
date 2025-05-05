@@ -13,3 +13,4 @@ ml_features = df.drop(columns=['Good','Overall'])
 ml_labels = df['Good']
 X = ml_features.select_dtypes(include=['number'])
 y = ml_labels
+X_train, y_train, X_test, y_test = 
