@@ -13,4 +13,19 @@ ml_features = df.drop(columns=['Good','Overall'])
 ml_labels = df['Good']
 X = ml_features.select_dtypes(include=['number'])
 y = ml_labels
-X_train, y_train, X_test, y_test = 
+X_train, y_train, X_test, y_test =  train_test_split(X, y, test_size=0.2, random_state=46)
+# Scale the features (if needed, optional)
+scaler = StandardScaler()
+scaler.fit(X_train)
+X_train_scaled = scaler.transform(X_train)
+# Train the model
+model = RandomForestClassifier(n_estimators=100, random_state=46)
+model.fit(X_train_scaled, y_train)
+# Make predictions using the test set
+X_test_scaled = scaler.transform(X_test)
+y_pred = model.predict(X_test_scaled)
+# Evaluate the model
+ml_accuracy = classification_report(y_test, y_pred)
+ml_f1_score = f1_score(y_test, y_pred, average='macro')
+print("Classification Report:\n", classification_report(y_test, y_pred))
+print("F1 Score (macro):", f1_score(y_test, y_pred, average='macro'))
